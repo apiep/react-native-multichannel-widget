@@ -81,12 +81,6 @@ const HomeScreen = ({route, navigation}) => {
                 messageExtras : messageExtras,
             }
             widget.initiateChat(options)
-                .then(data => {
-                    //console.log(data)
-                })
-                .catch(e => {
-                    console.log('error login', e);
-                });
         }
         navigation.navigate('Chat');
     }
