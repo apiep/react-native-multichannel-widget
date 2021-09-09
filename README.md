@@ -13,12 +13,12 @@
 
 ## Requirements
 
-* React Native Version >= 0.59
+- React Native Version >= 0.59
 
 ## Installation
 
-* Using npm `npm i @qiscus-community/react-native-multichannel-widget`
-* Using yarn `yarn add @qiscus-community/react-native-multichannel-widget`
+- Using npm `npm i @qiscus-community/react-native-multichannel-widget`
+- Using yarn `yarn add @qiscus-community/react-native-multichannel-widget`
 
 ## Configuration Widget
 
@@ -30,7 +30,7 @@ We use Hooks to synchronize data. To make it work we have to explicitly insert a
 // in your entry file like `App.js`
 import {MultichannelWidgetProvider} from '@qiscus-community/react-native-multichannel-widget';
 
-// in your render function 
+// in your render function
 return (
   <MultichannelWidgetProvider>  // <- use MultichannelWidgetProvider
     <App />
@@ -40,7 +40,7 @@ return (
 
 [Reference : ExampleApp](ExampleApp/App/index.js#lines-70:74)
 
-### 2. Initialization Widget 
+### 2. Initialization Widget
 
 Initiate widget for first time
 
@@ -57,7 +57,7 @@ useEffect(()=>{
       uploadURLSdk: // custom uploader url SDK
     }
     Qiscus.setup(AppId,options);
-},[])    
+},[])
 ....
 };
 
@@ -65,8 +65,7 @@ useEffect(()=>{
 
 [Reference : ExampleApp](ExampleApp/App/index.js#lines-26)
 
-
-> ***AppId Qiscus*** *used to initiate chat applications in qiscus, further related to AppId :* [*https://documentation.qiscus.com/latest/multichannel-customer-service/settings-and-configuration#app-information*](https://documentation.qiscus.com/latest/multichannel-customer-service/settings-and-configuration#app-information)
+> **_AppId Qiscus_** _used to initiate chat applications in qiscus, further related to AppId :_ [_https://documentation.qiscus.com/latest/multichannel-customer-service/settings-and-configuration#app-information_](https://documentation.qiscus.com/latest/multichannel-customer-service/settings-and-configuration#app-information)
 
 ### 3. Initialization Chat
 
@@ -78,27 +77,26 @@ import Widget from '@qiscus-community/react-native-multichannel-widget';
 const widget = Widget();
 widget.initiateChat(options)
   .then(result => {
-                
+
   })
   .catch(e => {
-                
+
   })
 ```
 
 [Reference: ExampleApp](ExampleApp/App/screens/HomeScreen.js#lines-61)
 
-Input options (object prefered)
-------
+## Input options (object prefered)
 
-| fields          | type                      | required | description                                                                                                                                             |
-| --------------- | ------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| userId          | string                    | true     |  unique identifier of a user                                                                                                                                                       |
-| name            | string                    | true     | display name of a user                                                                                                                                                        |
-| deviceId        | string                    | false    | device token from fcm, used for push notification needs |
-| extras          | json_string/ json_object  | false    | eg: {"data_source": "us"}                                                                                                             |
-| additionalInfo  | json_string/ json_object  | false    | it will fill the user properties bar on the right side of customer room |
-| messageExtras  | json__string/ json_object  | false    | will fill the information on message extras                                                                                                                          |
-| channelId      | integer                    | false    |optional, init chat on target channel_id                                                                         |
+| fields         | type                        | required | description                                                             |
+| -------------- | --------------------------- | -------- | ----------------------------------------------------------------------- |
+| userId         | string                      | true     | unique identifier of a user                                             |
+| name           | string                      | true     | display name of a user                                                  |
+| deviceId       | string                      | false    | device token from fcm, used for push notification needs                 |
+| extras         | json_string/ json_object    | false    | eg: {"data_source": "us"}                                               |
+| additionalInfo | json_string/ json_object    | false    | it will fill the user properties bar on the right side of customer room |
+| messageExtras  | json\_\_string/ json_object | false    | will fill the information on message extras                             |
+| channelId      | integer                     | false    | optional, init chat on target channel_id                                |
 
 Example
 
@@ -123,10 +121,10 @@ let options = {
 }
 widget.initiateChat(options)
   .then(result => {
-                
+
   })
   .catch(e => {
-                
+
   })
 ```
 
@@ -148,14 +146,14 @@ Using component header
 
 **Props**
 
-* `title` *(String)* - Custom title
-* `subtitle` *(String)* - Custom subtitle
-* `avatar` *(Object)* -  Extra props to be passed Component to custom avatar
-* `height` *(Integer)* - Height of the Header, default is `56`
-* `headerRight` *(Object)* - Extra props to be passed Component to the Right Header
-* `headerLeft` *(Object)* - Extra props to be passed Component to the Left Header
-* `style` *(Object)* - Extra props to be passed custom style header
-* `textColor` *(String)* - Custom text color header
+- `title` _(String)_ - Custom title
+- `subtitle` _(String)_ - Custom subtitle
+- `avatar` _(Object)_ - Extra props to be passed Component to custom avatar
+- `height` _(Integer)_ - Height of the Header, default is `56`
+- `headerRight` _(Object)_ - Extra props to be passed Component to the Right Header
+- `headerLeft` _(Object)_ - Extra props to be passed Component to the Left Header
+- `style` _(Object)_ - Extra props to be passed custom style header
+- `textColor` _(String)_ - Custom text color header
 
 [Reference : ExampleApp](ExampleApp/App/screens/ChatScreen.js#lines-37)
 
@@ -176,20 +174,20 @@ Using chat room component
 
 **Props**
 
-* `onSuccessGetRoom` *(Function(`room`))* - Callback when success get room
-* `onPressSendAttachment` *(Function)* - Callback when button Send Attachment is tapped
-* `onPressVideo` *(Function)* -  Callback when button media player is tapped
-* `onDownload` *(Function)* - Callback when a download message attachment is tapped
-* `renderSendAttachment` *(Object)* - Extra props to be custom Component button Send Attachment
-* `renderSendMessage` *(Object)* - Extra props to be custom Component button Send Message
-* `placeholder` *(String)* - Extra props to be custom placeholder, default `Type a message...`
-* `renderTickSent` *(Object)* - Extra props to be custom Component Tick Sent
-* `renderTickDelivered` *(Object)* - Extra props to be custom Component Tick Delivered
-* `renderTickRead` *(Object)* - Extra props to be custom Component Tick Read
-* `renderTickPending` *(Object)* - Extra props to be custom Component Tick Pending
-* `filterMessage` *(Function(message))* - Extra props to filter list message
-* `avatar` *(Object)* -  Extra props to be passed Component to custom avatar
-* `onTyping` *(Function)* -  Callback when a user typing
+- `onSuccessGetRoom` _(Function(`room`))_ - Callback when success get room
+- `onPressSendAttachment` _(Function)_ - Callback when button Send Attachment is tapped
+- `onPressVideo` _(Function)_ - Callback when button media player is tapped
+- `onDownload` _(Function)_ - Callback when a download message attachment is tapped
+- `renderSendAttachment` _(Object)_ - Extra props to be custom Component button Send Attachment
+- `renderSendMessage` _(Object)_ - Extra props to be custom Component button Send Message
+- `placeholder` _(String)_ - Extra props to be custom placeholder, default `Type a message...`
+- `renderTickSent` _(Object)_ - Extra props to be custom Component Tick Sent
+- `renderTickDelivered` _(Object)_ - Extra props to be custom Component Tick Delivered
+- `renderTickRead` _(Object)_ - Extra props to be custom Component Tick Read
+- `renderTickPending` _(Object)_ - Extra props to be custom Component Tick Pending
+- `filterMessage` _(Function(message))_ - Extra props to filter list message
+- `avatar` _(Object)_ - Extra props to be passed Component to custom avatar
+- `onTyping` _(Function)_ - Callback when a user typing
 
 [Reference : ExampleApp](ExampleApp/App/screens/ChatScreen.js#lines-183)
 
@@ -217,13 +215,16 @@ At the logout action from the app, you need to implement removeNotification meth
 widget.removeNotification('FCM_TOKEN')
 ```
 
-> *FCM_TOKEN is the same value when first initiation in step:* [3. Initialization Chat](#3-initialization-chat) link
+> _FCM_TOKEN is the same value when first initiation in step:_ [3. Initialization Chat](#3-initialization-chat) link
 
 ## Change Language
+
 To change the language you can use changeLanguage method with input en for English and id for Indonesia.
+
 ```
 widget.changeLanguage("en")
 ```
+
 ## Get Qiscus SDK Service
 
 To get Qiscus functionalities, you can import Qiscus like below.
@@ -247,20 +248,20 @@ for more methods related qiscus sdk service, you can read on this link : https:/
 
 [ExampleApp](master/ExampleApp) folder contains an example app to demonstrate how to use this package.
 
-**How to run the example app** 
+**How to run the example app**
 
-* Clone or download this repo
-* Open ExampleApp directory
-* create new file with name `.env` file like .[env_sample](ExampleApp/.env_sample) add **APP_ID** with your Multichannel AppId
-* Open your terminal or cmd and execute `npm install` command
-* To run the Example App you need to execute `react-native run-android` command and wait for the process to complete
+- Clone or download this repo
+- Open ExampleApp directory
+- create new file with name `.env` file like .[env_sample](ExampleApp/.env_sample) add **APP_ID** with your Multichannel AppId
+- Open your terminal or cmd and execute `npm install` command
+- To run the Example App you need to execute `react-native run-android` command and wait for the process to complete
 
 ## Push Notification
 
 To implement push notification in react native widget you need to add FCM Key in notifications setting, below is how to do it, you need to read in “**Android's Customer Widget Push Notification”** section
-https://documentation.qiscus.com/multichannel-customer-service/settings-and-configuration#notifications 
+https://documentation.qiscus.com/multichannel-customer-service/settings-and-configuration#notifications
 
 ## References
 
-* Multichannel Mobile in app widget from scratch : https://documentation.qiscus.com/multichannel-customer-service/channel-integration#mobile-in-app-widget
-* Mobile App push notification : https://documentation.qiscus.com/multichannel-customer-service/channel-integration#mobile-app-push-notification
+- Multichannel Mobile in app widget from scratch : https://documentation.qiscus.com/multichannel-customer-service/channel-integration#mobile-in-app-widget
+- Mobile App push notification : https://documentation.qiscus.com/multichannel-customer-service/channel-integration#mobile-app-push-notification

@@ -8,19 +8,17 @@ export const NotificationHandler = async (message) => {
 
 export const addNotificationBadge = () => {
   try {
-    AsyncStorage.getItem('notif')
-      .then(value => {
-        if (value !== null) {
-          let count = parseInt(value) + 1;
-          PushNotification.setApplicationIconBadgeNumber(count);
-          AsyncStorage.setItem('notif', count.toString());
-        } else {
-          AsyncStorage.setItem('notif', '1'.toString());
-          PushNotification.setApplicationIconBadgeNumber(1);
-        }
-      });
-  } catch (e) {
-  }
+    AsyncStorage.getItem('notif').then((value) => {
+      if (value !== null) {
+        let count = parseInt(value) + 1;
+        PushNotification.setApplicationIconBadgeNumber(count);
+        AsyncStorage.setItem('notif', count.toString());
+      } else {
+        AsyncStorage.setItem('notif', '1'.toString());
+        PushNotification.setApplicationIconBadgeNumber(1);
+      }
+    });
+  } catch (e) {}
 };
 
 export const clearNotification = () => {

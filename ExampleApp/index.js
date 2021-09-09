@@ -8,4 +8,7 @@ import {name as appName} from './app.json';
 import {NotificationHandler} from './App/helpers/NotificationHelper';
 
 AppRegistry.registerComponent(appName, () => App);
-AppRegistry.registerHeadlessTask('ReactNativeFirebaseMessagingHeadlessTask', () => NotificationHandler);
+AppRegistry.registerHeadlessTask(
+  'ReactNativeFirebaseMessagingHeadlessTask',
+  () => NotificationHandler,
+);
