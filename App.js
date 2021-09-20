@@ -1,11 +1,10 @@
-GLOBAL.XMLHttpRequest = GLOBAL.originalXMLHttpRequest || GLOBAL.XMLHttpRequest;
+// GLOBAL.XMLHttpRequest = GLOBAL.originalXMLHttpRequest || GLOBAL.XMLHttpRequest;
 import React, { useEffect, useState } from 'react';
-import { Image, Linking, StyleSheet, View, Button } from 'react-native';
+import { Image, Linking, StyleSheet, View, Button, Platform, SafeAreaView } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import Widget, {
+import {
   MultichannelWidgetProvider,
   MultichannelWidget,
-  Qiscus,
   Header,
 } from './lib';
 import { getFileExtension, getUrlFileName } from './lib/utils';
@@ -17,13 +16,17 @@ import {
   USER_ID_2,
   NAME_2,
   DEVICE_ID,
-  CHANNEL_ID,
-} from 'react-native-dotenv';
+} from './const';
+import { useAppState, useEndSession, useInitiateChat, useSetup } from './lib/contexts/hooks';
+import { useAtomValue } from 'jotai/utils';
+import { accountAtom, loginCheckedAtom } from './lib/contexts/state';
 
 let firstLoad = true;
 
 function ChatRoom({ onBack }) {
-  const widget = Widget();
+  // const widget = Widget();
+
+  const endSession = useEndSession()
 
   useEffect(() => {
     (async () => {
@@ -37,7 +40,7 @@ function ChatRoom({ onBack }) {
         } catch (e) {}
       }
     })();
-    return () => widget.endSession();
+    return () => endSession();
   }, []);
 
   const pickImage = async (type) => {
@@ -67,64 +70,63 @@ function ChatRoom({ onBack }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Header
-        height={56}
-        headerLeft={
-          <Arrow
-            style={styles.arrowIcon}
-            onPress={() => {
-              onBack();
-            }}
-          />
-        }
-        style={{
-          backgroundColor: 'orange',
-        }}
-        textColor="white"
-      />
+    <SafeAreaView style={{flex: 1}}>
+      <View style={styles.container}>
+        {false && <Header
+          height={56}
+          headerLeft={
+            <Arrow
+              style={styles.arrowIcon}
+              onPress={() => {
+                onBack();
+              }}
+            />
+          }
+          style={{
+            backgroundColor: 'orange',
+          }}
+          textColor="white"
+        />}
 
-      <MultichannelWidget
-        onSuccessGetRoom={(room) => {}}
-        onDownload={(url, fileName) => {
-          Linking.openURL(url);
-        }}
-        onPressSendAttachment={pickImage}
-        renderTickSent={
-          <Image
-            source={require('./lib/assets/ic_check_sent.png')}
-            style={styles.tick}
-          />
-        }
-        renderTickDelivered={
-          <Image
-            source={require('./lib/assets/ic_check_delivered.png')}
-            style={styles.tick}
-          />
-        }
-        renderTickRead={
-          <Image
-            source={require('./lib/assets/ic_check_read.png')}
-            style={styles.tick}
-          />
-        }
-        renderTickPending={
-          <Image
-            source={require('./lib/assets/ic_check_pending.png')}
-            style={styles.tick}
-          />
-        }
-      />
-    </View>
+        <MultichannelWidget
+          onSuccessGetRoom={(room) => {}}
+          onDownload={(url, fileName) => {
+            Linking.openURL(url);
+          }}
+          onPressSendAttachment={pickImage}
+          renderTickSent={
+            <Image
+              source={require('./lib/assets/ic_check_sent.png')}
+              style={styles.tick}
+            />
+          }
+          renderTickDelivered={
+            <Image
+              source={require('./lib/assets/ic_check_delivered.png')}
+              style={styles.tick}
+            />
+          }
+          renderTickRead={
+            <Image
+              source={require('./lib/assets/ic_check_read.png')}
+              style={styles.tick}
+            />
+          }
+          renderTickPending={
+            <Image
+              source={require('./lib/assets/ic_check_pending.png')}
+              style={styles.tick}
+            />
+          }
+        />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
-    paddingBottom: 0,
-    padding: 10,
   },
   arrowIcon: {
     height: 20,
@@ -139,12 +141,15 @@ const styles = StyleSheet.create({
 });
 
 const Home = ({ onPress }) => {
-  const widget = Widget();
+  const setup = useSetup()
+  const initiateChat = useInitiateChat()
+
   useEffect(() => {
     if (firstLoad) {
-      widget.setup(APP_ID).then(() => {
+      setup(APP_ID)
+      .then(() => {
         initChat(USER_ID_1, NAME_1);
-        onPress(false);
+        onPress?.(false);
       });
       firstLoad = false;
     }
@@ -168,7 +173,7 @@ const Home = ({ onPress }) => {
       // channelId: CHANNEL_ID
     };
 
-    widget.initiateChat(options);
+    initiateChat(options);
   };
 
   return (
@@ -184,7 +189,7 @@ const Home = ({ onPress }) => {
       <Button
         onPress={() => {
           initChat(USER_ID_1, NAME_1);
-          onPress(false);
+          onPress?.(false);
         }}
         title={`Init Chat ${NAME_1}`}
         color="#841584"
@@ -203,7 +208,7 @@ const Home = ({ onPress }) => {
 
       <Button
         onPress={() => {
-          widget.changeLanguage('en');
+          // widget.changeLanguage('en');
         }}
         title={`Lang end`}
         color="#841584"
@@ -212,7 +217,7 @@ const Home = ({ onPress }) => {
 
       <Button
         onPress={() => {
-          widget.changeLanguage('id');
+          // widget.changeLanguage('id');
         }}
         title={`Lang ID`}
         color="#841584"
@@ -224,6 +229,7 @@ const Home = ({ onPress }) => {
 
 function App() {
   const [inHome, setInHome] = useState(true);
+
   return (
     <MultichannelWidgetProvider>
       {inHome ? (

@@ -1,5 +1,6 @@
-node_modules/**/*
-.expo/*
+lib/dist/
+node_modules/
+.expo/
 npm-debug.*
 *.jks
 *.p8
@@ -24,3 +25,4 @@ package-lock.json
 
 *.tgz
 .env
+node_modules

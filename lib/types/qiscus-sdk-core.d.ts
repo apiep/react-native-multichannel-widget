@@ -112,7 +112,7 @@ declare module 'qiscus-sdk-core' {
       text: string,
       uniqueId?: string,
       type?: string,
-      payload?: Record<string, any>,
+      payload?: string,
       extras?: Record<string, any>
     ): Promise<Message>;
     loadComments(
@@ -126,9 +126,9 @@ declare module 'qiscus-sdk-core' {
       roomId: number,
       messageUniqueIds: string[]
     ): Promise<{ results: { comments: Message[] } }>;
-    async getTotalUnreadCount(): Promise<number>;
-    async getRoomById(roomId: number): Promise<Room>;
-    async getNonce(): Promise<{ expired_at: number; nonce: string }>;
+    getTotalUnreadCount(): Promise<number>;
+    getRoomById(roomId: number): Promise<Room>;
+    getNonce(): Promise<{ expired_at: number; nonce: string }>;
     verifyIdentityToken(identityToken: string): Promise<{ user: User }>;
     setUserWithIdentityToken(userData: { user: User }): void;
     disconnect(): void;
