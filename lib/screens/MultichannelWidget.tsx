@@ -15,6 +15,7 @@ import {
   useQiscus
 } from '../contexts/hooks'
 import { Message, Room } from '../contexts/types'
+import { MessageItemImage } from './message-item/image'
 
 type MultichannelWidgetProps = {
   onSuccessGetRoom?: (room: Room) => void
@@ -87,6 +88,8 @@ function MessageList(props: MessageListProps) {
 
   const renderItem = useCallback((item) => {
     switch (item.type) {
+      case 'file_attachment':
+        return <MessageItemImage item={item} />
       case 'system_event':
         return <MessageItemSystemEvent item={item} />
       default:
@@ -253,7 +256,6 @@ function MessageItemText(props: MessageItemTextProps) {
           flex: 1,
         }}
       >
-        <Text>{props.item.timestamp}</Text>
         <Text
           style={{
             color: 'white',

@@ -13,6 +13,12 @@ export const messagesAtom = atomWithImmer<Record<string, Message>>({})
 export const messagesListAtom = atom((get) => {
   let messages = Object.values(get(messagesAtom))
   messages = messages.slice().sort((m1, m2) => m1.unix_nano_timestamp - m2.unix_nano_timestamp)
+
+  messages
+    .filter(it => it.type !== 'text')
+    .filter(it => it.type !== 'system_event')
+    .forEach((it) => console.log(it))
+
   return messages
 })
 

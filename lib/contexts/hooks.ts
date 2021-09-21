@@ -530,3 +530,12 @@ export function useOnLoginSuccess(
 export function useAppState(): AppState {
   return useAtomValue(appStateAtom)
 }
+
+export function useCurrentUserAvatar() {
+  let user = useCurrentUser()
+
+  if (user?.avatar_url == null)
+    return require('../screens/icons/default-user-avatar.png')
+
+  return { uri: user.avatar_url }
+}
